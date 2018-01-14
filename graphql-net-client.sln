@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Client", "GraphQL.Client\GraphQL.Client.csproj", "{D4D363A8-3C58-453D-8BE8-1CFDFA1BCE52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{DC39BA01-0D8E-4A16-80AE-9B81C7BF4CC7}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4D363A8-3C58-453D-8BE8-1CFDFA1BCE52}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4D363A8-3C58-453D-8BE8-1CFDFA1BCE52}.Debug|x86.Build.0 = Debug|Any CPU
+		{D4D363A8-3C58-453D-8BE8-1CFDFA1BCE52}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4D363A8-3C58-453D-8BE8-1CFDFA1BCE52}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5C7E739-8381-41F9-8C35-4E5F144E9D61}
+	EndGlobalSection
+EndGlobal

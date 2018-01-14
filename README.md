@@ -51,3 +51,11 @@ else
     Console.WriteLine("Null :(");
 }
 ```
+
+## Configure HTTP Headers
+```cs
+var client = new GraphQLClient("https://mygraphql.endpoint", headers => {
+    headers[HttpRequestHeader.ContentType] = "application/json";
+    headers["X-Some-Header"] = "Some value";
+});
+```

@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
@@ -9,73 +8,21 @@ namespace GraphQL
 {
     public class GraphQLClient
     {
-        private class GraphQLQuery
-        {
-            // public string OperationName { get; set; }
-            public string query { get; set; }
-            public object variables { get; set; }
-        }
-        public class GraphQLQueryResult
-        {
-            private string raw;
-            private JObject data;
-            private Exception Exception;
-            public GraphQLQueryResult(string text, Exception ex = null)
-            {
-                Exception = ex;
-                raw = text;
-                data = text != null ? JObject.Parse(text) : null;
-            }
-            public Exception GetException()
-            {
-                return Exception;
-            }
-            public string GetRaw()
-            {
-                return raw;
-            }
-            public T Get<T>(string key)
-            {
-                if (data == null) return default(T);
-                try
-                {
-                    return JsonConvert.DeserializeObject<T>(this.data["data"][key].ToString());
-                }
-                catch
-                {
-                    return default(T);
-                }
-            }
-            public dynamic Get(string key)
-            {
-                if (data == null) return null;
-                try
-                {
-                    return JsonConvert.DeserializeObject<dynamic>(this.data["data"][key].ToString());
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            public dynamic GetData()
-            {
-                if (data == null) return null;
-                try
-                {
-                    return JsonConvert.DeserializeObject<dynamic>(this.data["data"].ToString());
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
-        private string url;
+        private string _url;
+
+        private Action<WebHeaderCollection> _configureHeaders;
+
         public GraphQLClient(string url)
         {
-            this.url = url;
+            _url = url;
         }
+
+        public GraphQLClient(string url, Action<WebHeaderCollection> configureHeaders)
+        {
+            _url = url;
+            _configureHeaders = configureHeaders;
+        }
+
         public dynamic Query(string query, object variables)
         {
             var fullQuery = new GraphQLQuery()
@@ -86,8 +33,10 @@ namespace GraphQL
             string jsonContent = JsonConvert.SerializeObject(fullQuery);
 
             Console.WriteLine(jsonContent);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_url);
             request.Method = "POST";
+
+            _configureHeaders?.Invoke(request.Headers);
 
             UTF8Encoding encoding = new UTF8Encoding();
             Byte[] byteArray = encoding.GetBytes(jsonContent.Trim());
