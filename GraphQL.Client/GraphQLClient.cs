@@ -1,3 +1,4 @@
+using GraphQL.Client.Exceptions;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -23,7 +24,7 @@ namespace GraphQL
             _configureHeaders = configureHeaders;
         }
 
-        public dynamic Query(string query, object variables)
+        public GraphQLQueryResult Query(string query, object variables)
         {
             var fullQuery = new GraphQLQuery()
             {
@@ -69,8 +70,7 @@ namespace GraphQL
                 {
                     StreamReader reader = new StreamReader(responseStream, Encoding.GetEncoding("utf-8"));
                     String errorText = reader.ReadToEnd();
-                    Console.WriteLine(errorText);
-                    return new GraphQLQueryResult(null, ex);
+                    throw new GraphQLRequestException(ex.Message, errorText, ex);
                 }
             }
         }

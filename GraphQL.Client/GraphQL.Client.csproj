@@ -5,6 +5,17 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>Graphql</PackageTags>
+    <RepositoryUrl>https://github.com/JeyDotC/graphql-net-client</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>graphql-net-client</PackageId>
+    <Authors>bkniffler, jeydotc</Authors>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/bkniffler/graphql-net-client/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/JeyDotC/graphql-net-client</PackageProjectUrl>
+    <PackageReleaseNotes>* Removed the exception stuff from result object.
+* Return result object instead of dynamic to support intellisense.
+* Stop silent exceptions</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />

@@ -8,17 +8,13 @@ namespace GraphQL
     {
         private string raw;
         private JObject data;
-        private Exception Exception;
-        public GraphQLQueryResult(string text, Exception ex = null)
+
+        public GraphQLQueryResult(string text)
         {
-            Exception = ex;
             raw = text;
             data = text != null ? JObject.Parse(text) : null;
         }
-        public Exception GetException()
-        {
-            return Exception;
-        }
+       
         public string GetRaw()
         {
             return raw;
