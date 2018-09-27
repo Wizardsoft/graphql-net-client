@@ -7,57 +7,75 @@ using System.Text;
 
 namespace GraphQL
 {
+    /// <summary>
+    /// A client to access GraphQL apis.
+    /// </summary>
     public class GraphQLClient
     {
         private string _url;
 
         private Action<WebHeaderCollection> _configureHeaders;
 
+        /// <summary>
+        /// Creates a new GraphQLClient instance.
+        /// </summary>
+        /// <param name="url">The GraphQL API's URL</param>
         public GraphQLClient(string url)
         {
             _url = url;
         }
 
+        /// <summary>
+        /// Creates a new GraphQLClient instance with a headers configurator delegate.
+        /// </summary>
+        /// <param name="url">The GraphQL API's URL</param>
+        /// <param name="configureHeaders">A delegate that configures the request headers.</param>
         public GraphQLClient(string url, Action<WebHeaderCollection> configureHeaders)
         {
             _url = url;
             _configureHeaders = configureHeaders;
         }
 
-        public GraphQLQueryResult Query(string query, object variables)
+        /// <summary>
+        /// Performs a request to the GraphQL API with the given variables.
+        /// </summary>
+        /// <param name="query">The query to be performed.</param>
+        /// <param name="variables">The variables that will be added to the Query.</param>
+        /// <returns>The result of the query.</returns>
+        /// <exception cref="GraphQLRequestException">When there's a communication problem.</exception>
+        public GraphQLQueryResult Query(string query, object variables = null)
         {
             var fullQuery = new GraphQLQuery()
             {
                 query = query,
-                variables = variables,
+                variables = variables ?? new object { },
             };
-            string jsonContent = JsonConvert.SerializeObject(fullQuery);
 
-            Console.WriteLine(jsonContent);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_url);
+            var jsonContent = JsonConvert.SerializeObject(fullQuery);
+            
+            var request = WebRequest.Create(_url);
             request.Method = "POST";
 
             _configureHeaders?.Invoke(request.Headers);
 
-            UTF8Encoding encoding = new UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonContent.Trim());
+            var encoding = new UTF8Encoding();
+            var byteArray = encoding.GetBytes(jsonContent.Trim());
 
             request.ContentLength = byteArray.Length;
             request.ContentType = @"application/json";
 
-            using (Stream dataStream = request.GetRequestStream())
+            using (var dataStream = request.GetRequestStream())
             {
                 dataStream.Write(byteArray, 0, byteArray.Length);
             }
-            long length = 0;
+            
             try
             {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    length = response.ContentLength;
-                    using (Stream responseStream = response.GetResponseStream())
+                    using (var responseStream = response.GetResponseStream())
                     {
-                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        var reader = new StreamReader(responseStream, Encoding.UTF8);
                         var json = reader.ReadToEnd();
                         return new GraphQLQueryResult(json);
                     }
@@ -65,11 +83,11 @@ namespace GraphQL
             }
             catch (WebException ex)
             {
-                WebResponse errorResponse = ex.Response;
-                using (Stream responseStream = errorResponse.GetResponseStream())
+                var errorResponse = ex.Response;
+                using (var responseStream = errorResponse.GetResponseStream())
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.GetEncoding("utf-8"));
-                    String errorText = reader.ReadToEnd();
+                    var reader = new StreamReader(responseStream, Encoding.GetEncoding("utf-8"));
+                    var errorText = reader.ReadToEnd();
                     throw new GraphQLRequestException(ex.Message, errorText, ex);
                 }
             }
