@@ -11,10 +11,12 @@
     <RepositoryType>git</RepositoryType>
     <PackageId>graphql-net-client</PackageId>
     <Authors>bkniffler, jeydotc</Authors>
-    <PackageVersion>1.1.0.0</PackageVersion>
+    <PackageVersion>1.1.1.0</PackageVersion>
     <PackageLicenseUrl>https://raw.githubusercontent.com/bkniffler/graphql-net-client/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/JeyDotC/graphql-net-client</PackageProjectUrl>
-    <PackageReleaseNotes>* Added header information to the results and the exception.</PackageReleaseNotes>
+    <PackageReleaseNotes>* Added header information to the results and the exception.
+* Bugfix: The Query builder generates wrong query.
+* Bugfix: If the client receives a response with errors, it tried to convert the data part into JObject though it was null.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\PublishProfiles\**" />

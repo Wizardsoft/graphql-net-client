@@ -27,15 +27,15 @@ namespace GraphQL
 
             if (dataAsDictionary.ContainsKey("data"))
             {
-                Data = (JObject)jObject["data"];
+                Data = jObject["data"] as JObject;
             }
 
             if (dataAsDictionary.ContainsKey("errors"))
             {
-                Errors = jObject["errors"].ToObject<IEnumerable<GraphQLQueryError>>(new JsonSerializer
+                Errors = jObject["errors"]?.ToObject<IEnumerable<GraphQLQueryError>>(new JsonSerializer
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
-                });
+                }) ?? Enumerable.Empty<GraphQLQueryError>();
             }
 
         }

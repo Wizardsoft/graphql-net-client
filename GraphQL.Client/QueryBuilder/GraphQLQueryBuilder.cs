@@ -61,9 +61,9 @@ namespace GraphQL.Client.QueryBuilder
             var builtArguments = _arguments.Empty ? string.Empty : $"({_arguments.Build()})";
             var fields = _select.Build(_nesting + 1, formatting);
             var children = string.Join(newLine, _children.Select(q => q.ChildBuild(formatting)));
-
+            
             return 
-$@"{nesting}{_objectToQuery}{builtArguments} {{{newLine}{fields}{string.Join(newLine, _children.Select(q => q.ChildBuild(formatting)))}{newLine}{nesting}}}";
+$@"{nesting}{_objectToQuery}{builtArguments} {{{newLine}{fields}{(string.IsNullOrEmpty(fields) ? "" : newLine)}{children}{(string.IsNullOrEmpty(children) ? "" : newLine)}{nesting}}}";
         }
 
         /// <summary>
