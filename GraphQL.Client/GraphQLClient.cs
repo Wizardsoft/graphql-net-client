@@ -1,5 +1,6 @@
 using GraphQL.Client.Exceptions;
 using Newtonsoft.Json;
+using System.Linq;
 using System;
 using System.IO;
 using System.Net;
@@ -77,18 +78,35 @@ namespace GraphQL
                     {
                         var reader = new StreamReader(responseStream, Encoding.UTF8);
                         var json = reader.ReadToEnd();
-                        return new GraphQLQueryResult(json);
+                        return new GraphQLQueryResult(
+                            json, 
+                            response.Headers.AllKeys.ToDictionary(
+                                h => h, 
+                                h => response.Headers[h]
+                            )
+                        );
                     }
                 }
             }
             catch (WebException ex)
             {
                 var errorResponse = ex.Response;
+
                 using (var responseStream = errorResponse.GetResponseStream())
                 {
                     var reader = new StreamReader(responseStream, Encoding.GetEncoding("utf-8"));
+
                     var errorText = reader.ReadToEnd();
-                    throw new GraphQLRequestException(ex.Message, errorText, ex);
+
+                    throw new GraphQLRequestException(
+                        ex.Message, 
+                        errorText,
+                        errorResponse.Headers.AllKeys.ToDictionary(
+                            h => h,
+                            h => errorResponse.Headers[h]
+                        ),
+                        ex
+                    );
                 }
             }
         }

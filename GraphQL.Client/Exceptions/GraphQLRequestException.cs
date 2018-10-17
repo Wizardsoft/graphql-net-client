@@ -13,11 +13,14 @@ namespace GraphQL.Client.Exceptions
 
         public GraphQLRequestException(string message, Exception inner) : base(message, inner) { }
 
-        public GraphQLRequestException(string message, string response, Exception inner) : base(message, inner) {
+        public GraphQLRequestException(string message, string response, IDictionary<string, string> responseHeaders, Exception inner) : base(message, inner) {
             ResponseContents = response;
+            ResponseHeaders = responseHeaders;
         }
 
         public string ResponseContents { get; }
+
+        public IDictionary<string, string> ResponseHeaders { get; } = new Dictionary<string, string>();
 
         protected GraphQLRequestException(
           System.Runtime.Serialization.SerializationInfo info,

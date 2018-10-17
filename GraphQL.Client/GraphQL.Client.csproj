@@ -11,13 +11,22 @@
     <RepositoryType>git</RepositoryType>
     <PackageId>graphql-net-client</PackageId>
     <Authors>bkniffler, jeydotc</Authors>
+    <PackageVersion>1.1.0.0</PackageVersion>
     <PackageLicenseUrl>https://raw.githubusercontent.com/bkniffler/graphql-net-client/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/JeyDotC/graphql-net-client</PackageProjectUrl>
-    <PackageReleaseNotes>* Created a query builder.
-* Improved QueryResult interface.
-* Stop outputting the query.</PackageReleaseNotes>
+    <PackageReleaseNotes>* Added header information to the results and the exception.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\PublishProfiles\**" />
+    <EmbeddedResource Remove="Properties\PublishProfiles\**" />
+    <None Remove="Properties\PublishProfiles\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

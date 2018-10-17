@@ -16,9 +16,10 @@ namespace GraphQL
         /// Creates a new GraphQLQueryResult instance.
         /// </summary>
         /// <param name="text">The result payload as JSON text with the `{ "data": {...}, "errors": [...] }` structure.</param>
-        public GraphQLQueryResult(string text)
+        public GraphQLQueryResult(string text, IDictionary<string, string> headers)
         {
             Raw = text ?? throw new ArgumentNullException(nameof(text));
+            Headers = headers;
 
             var jObject = JObject.Parse(text);
 
@@ -38,6 +39,11 @@ namespace GraphQL
             }
 
         }
+
+        /// <summary>
+        /// The result headers.
+        /// </summary>
+        public IDictionary<string, string> Headers { get; }
 
         /// <summary>
         /// The raw JSON payload with the `{ "data": {...}, "errors": [...] }` structure.
