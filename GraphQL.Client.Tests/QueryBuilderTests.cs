@@ -1,8 +1,6 @@
 using GraphQL.Client.QueryBuilder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Linq;
-using System.Net;
 
 namespace GraphQL.Client.Tests
 {

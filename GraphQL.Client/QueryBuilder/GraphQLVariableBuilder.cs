@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GraphQL.Client.QueryBuilder
+﻿namespace GraphQL.Client.QueryBuilder
 {
     public class GraphQLVariableBuilder
     {
