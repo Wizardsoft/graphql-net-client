@@ -9,7 +9,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">Apache-2.0</license>
     <projectUrl>https://github.com/Wizardsoft/graphql-net-client</projectUrl>
-    <description>Very simple GraphQL client for .Net</description>
+    <description>Lightweight GraphQL client for .Net</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright Wizardsoft 2020</copyright>
     <dependencies>
