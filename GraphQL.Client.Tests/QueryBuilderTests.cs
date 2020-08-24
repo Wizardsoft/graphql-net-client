@@ -109,9 +109,8 @@ namespace GraphQL.Client.Tests
 
             var client = new GraphQLClient("https://etmdb.com/graphql");
 
-            var result = client.Query(etmdbQuery);
+            var result = client.Query(etmdbQuery, null);
 
-            Assert.IsFalse(result.Errors.Any());
             Assert.IsNotNull(result.Data);
         }
 
